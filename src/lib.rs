@@ -3,9 +3,9 @@
 //!
 //! This optimizer works even when the objective function (for which a maximum
 //! or minimum value is sought) is not differentiable, so that a gradient
-//! magnitude cannot be feasibly calculated.  Any function may be optimized,
-//! provided its parameters are (or can be converted from) a slice of `f64`s
-//! and its output is at least `PartialOrd`.
+//! magnitude cannot be calculated.  Any function may be optimized,
+//! provided its parameters are (or can be converted from) a `&[f64]` and its
+//! output implments `PartialOrd`.
 //!
 //! Here's an example optimization, using the Rosenbrock function.
 //!
@@ -38,9 +38,9 @@ pub const DEFAULT_NUM_ITERATIONS: usize = 100;
 ///
 /// This optimizer works even when the objective function (for which a maximum
 /// or minimum value is sought) is not differentiable, so that a gradient
-/// magnitude cannot be feasibly calculated.  Any function may be optimized,
-/// provided its parameters are (or can be converted from) a slice of `f64`s
-/// and its output is at least `PartialOrd`.
+/// magnitude cannot be calculated.  Any function may be optimized,
+/// provided its parameters are (or can be converted from) a `&[f64]` and its
+/// output implments `PartialOrd`.
 ///
 /// Here's an example optimization, using the Rosenbrock function.
 ///
@@ -148,9 +148,6 @@ impl ProximalOptimizer {
 
   /// Sets the step compression ratio for each parameter to the value
   /// specified by `step_increase_ratios`.  
-  ///
-  /// This function will panic if `step_compression_ratios.len()` is not equal
-  /// to the number of parameters specified when this optimizer was created.
   pub fn step_decrease_ratios(&mut self,
                               step_compression_ratios: &[f64])
                               -> Result<(), ProximalOptimizerErr> {

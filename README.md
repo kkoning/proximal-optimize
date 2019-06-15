@@ -1,20 +1,21 @@
 # Introduction
 
-This crate contains a simple proximal search hill-climbing optimizer, suitable 
-for use in (some) machine-learning applications.  Roughly speaking, the 
-algorithm works by iterating from a user-specified starting point.  As long as
-the function's value continues to increase, size of these steps will start to
-grow exponentially.  As as the function's value starts to decrease, the 
-size of the steps will begin to exponentially decrease and flip directions to
-find a local minimum or maximum.
+This crate contains a simple proximal search hill-climbing optimizer, suitable
+for use in (some) machine-learning applications.  Roughly speaking, the
+algorithm works by iteratively searching for better values starting from a
+user-specified starting point. As long as the function's value continues to
+improve, size of these steps will start to grow exponentially.  When the
+function's value deteriorates, the iterations start looking in both directions,
+exponentially decreasing the step size until the function's value starts to
+improve again.
 
 This approach has two advantages that might make it suitable for your 
 application.
 
-1. There is no requirement to calculate a gradient, meaning that the technique
-   should work as long as the objective function implements `PartialOrd`.
-2. The API is very simple (i.e., it doesn't need to be adapted from some 
-   other more comprehensive library that may make other assumptions).
+1. There is no requirement to calculate a gradient; the technique should work as
+   long as the objective function implements `PartialOrd`. 
+2. The API is very simple (i.e., it doesn't need to be adapted from some other
+   more comprehensive library that may make other assumptions about its use).
 
 
 ## Example
@@ -56,11 +57,30 @@ While this has been tested with the Rosenbrock function (and a few other
 relatively simple concave/convex functions), this is more of a quick-and-dirty
 implementation that was "good enough" for my application, written after having
 some trouble finding an existing crate that was suitable and simple to adapt. It
-has not been subjected to a wide array of test functions, nor has it been
-implemented directly from an academic work on the subject.  Contributions on
-either front would be welcome.
+has not been subjected to a wide range of test functions, nor was it based
+directly on academic work in the area.  Contributions on either front would be
+welcome; the Parikh and Boyd (2013) monograph on proximal algorithms would
+probably be a good resource.[^1]
 
-What this means is that you should probably actually make sure this algorithm
-works for your problem set. If fire-and-forget robustness or very high
-efficiency on large problem sets are important to you, you may consider a more
-sophisticated and mature package if one is available.
+What this means in practice is that you should experiment to see if this
+algorithm is a good fit for your problem set.  Actually, that's probably good
+advice for most AI/machine learning situations...  In any case, if
+fire-and-forget robustness or very high efficiency on large problem sets are
+important to you, you may consider a more sophisticated and mature package if
+one is available.  In other words...  this worked for me, YMMV.  
+
+[^1]: https://web.stanford.edu/~boyd/papers/pdf/prox_algs.pdf
+
+
+## Notes and TODO
+
+- This package depends only on a few core interfaces (notably in `core::cmp`)
+  and `alloc::vec::Vec`, meaning it should work in a `#![no_std]` environment
+  as long as the `alloc` crate is also included.
+- When rust's const generics are ready, even the dependence on `alloc` will be
+  trivial to remove.  (It's technically possible now, but it'd make the API
+  too awkward.) 
+
+
+
+

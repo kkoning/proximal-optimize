@@ -23,10 +23,19 @@
 //! assert_eq!(optimized, vec![0.999208314861111, 0.998416214890118]);
 //! ```
 
+#![no_std]
+
+#[cfg(test)]
+#[macro_use]
+extern crate std;
+
+extern crate alloc;
+
 use core::{
   cmp::Ordering,
   fmt::Debug,
 };
+use alloc::vec::Vec;
 
 pub const DEFAULT_EXPANSION_RATIO: f64 = 1.5;
 pub const DEFAULT_COMPRESSION_RATIO: f64 = 0.5;

@@ -1,6 +1,12 @@
 [package]
 name = "proximal-optimize"
+description = "A simple proximal search hill-climbing optimizer"
 version = "0.1.0"
 authors = ["Kendall Koning <kkoning@kkoning.net>"]
 edition = "2018"
 
+repository = "https://github.com/kkoning/proximal-optimize"
+categories = ["science", "no-std"]
+readme = "README.md"
+keywords = ["learning", "proximal", "optimization"]
+license = "AFL-3.0"

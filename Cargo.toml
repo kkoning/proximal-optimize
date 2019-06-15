@@ -1,0 +1,8 @@
+[package]
+name = "proximal-optimize"
+version = "0.1.0"
+authors = ["Kendall Koning <kkoning@kkoning.net>"]
+edition = "2018"
+
+[dependencies]
+log = "0.4.6"
